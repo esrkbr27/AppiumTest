@@ -15,7 +15,7 @@ import java.text.SimpleDateFormat;
 import java.util.*;
 
 public class Gestures {
-    AppiumDriver driver=Driver.initilazeDriver();
+   AppiumDriver driver=Driver.initilazeDriver();
 
     public Gestures() throws MalformedURLException {
     }
@@ -36,12 +36,10 @@ public class Gestures {
     }
 
 
-    public static void tap(AppiumDriver driver){
-      //  RemoteWebElement e = (RemoteWebElement) driver.findElement(AppiumBy.accessibilityId("Picker View"));
+    public static void tap(AppiumDriver driver, int x, int y){
         driver.executeScript("mobile: tap", ImmutableMap.of(
-       //         "elementId", e.getId(),
-                "x", 19,
-                "y", 366
+        "x", x,
+        "y", y
         ));
     }
 
@@ -58,7 +56,26 @@ public class Gestures {
         String target= System.getProperty("user.dir")+ "/target/Screenshots/"+ source.getName() + date + ".png";
         File finaldestination= new File(target);
         FileUtils.copyFile(source, finaldestination);
+    }
 
+    public static void pinch(AppiumDriver driver){
+
+        RemoteWebElement e = (RemoteWebElement) driver.findElement(AppiumBy.accessibilityId("target element"));
+        driver.executeScript("mobile: pinch", ImmutableMap.of(
+                "scale", 0.5,
+                "velocity", 1.1
+       //         "elementId", e.getId()
+        ));
+
+    }
+
+    public static void wait(int second)  {
+
+        try {
+            Thread.sleep(second*1000);
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
     }
 
 }
